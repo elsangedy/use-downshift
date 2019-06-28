@@ -4,6 +4,14 @@
 [![downloads][downloads-badge]][npmcharts]
 [![PRs Welcome][prs-badge]][prs]
 
+## Installation
+
+```bash
+$ yarn add use-downshift
+# or
+$ npm i use-downshift
+```
+
 ## Usage
 
 ```jsx
