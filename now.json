@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "name": "use-downshift",
+  "alias": "use-downshift.now.sh",
+  "public": true,
+  "builds": [
+    { "src": "package.json", "use": "@now/static-build" }
+  ]
+}

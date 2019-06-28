@@ -1,0 +1,78 @@
+---
+name: Dropdown
+menu: Examples
+---
+
+import { Playground } from 'docz'
+
+import Dropdown from './Dropdown'
+
+# Dropdown
+
+<Playground>
+  <Dropdown
+    label="Select item"
+    items={[
+      'Harry Potter',
+      'Net Moves',
+      'The Da Vinci Code',
+      'Born a crime',
+      '12 Strong',
+      'Half of a yellow sun',
+      'Gringo',
+      'Black Panther',
+    ]}
+    onChange={console.log}
+  />
+</Playground>
+
+## Code
+
+```js
+import React from 'react'
+
+import { useDownshift } from 'use-downshift'
+
+import Item from './shared/Item'
+
+function Dropdown({ items, label, onChange }) {
+  const {
+    isOpen,
+    getRootProps,
+    getMenuProps,
+    getItemProps,
+    getToggleButtonProps,
+    highlightedIndex,
+    selectedItem,
+  } = useDownshift({
+    onChange,
+  })
+
+  return (
+    <div {...getRootProps()}>
+      <button {...getToggleButtonProps()}>{selectedItem || label}</button>
+
+      {isOpen && (
+        <div {...getMenuProps()}>
+          <ul>
+            {items.map((item, index) => (
+              <Item
+                {...getItemProps({
+                  key: index,
+                  item,
+                  active: highlightedIndex === index,
+                  selected: selectedItem === item,
+                })}
+              >
+                {item}
+              </Item>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default Dropdown
+```

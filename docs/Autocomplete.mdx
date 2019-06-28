@@ -1,0 +1,93 @@
+---
+name: Autocomplete
+menu: Examples
+---
+
+import { Playground } from 'docz'
+
+import Autocomplete from './Autocomplete'
+
+# Autocomplete
+
+<Playground>
+  <Autocomplete
+    label="Autocomplete"
+    items={[
+      { name: 'Harry Potter' },
+      { name: 'Net Moves' },
+      { name: 'Half of a yellow sun' },
+      { name: 'The Da Vinci Code' },
+      { name: 'Born a crime' },
+    ]}
+    onChange={console.log}
+  />
+</Playground>
+
+## Code
+
+```js
+import React from 'react'
+
+import { useDownshift } from 'use-downshift'
+
+import Item from './shared/Item'
+
+function Autocomplete({ items, label, onChange }) {
+  const itemToString = item => (item ? item.name : '')
+
+  const {
+    isOpen,
+    getRootProps,
+    getMenuProps,
+    getItemProps,
+    getLabelProps,
+    getInputProps,
+    getToggleButtonProps,
+    highlightedIndex,
+    inputValue,
+    selectedItem,
+    clearSelection,
+  } = useDownshift({
+    itemToString,
+    onChange,
+  })
+
+  return (
+    <div {...getRootProps()}>
+      <label {...getLabelProps()}>{label}</label>
+      <br />
+      <input {...getInputProps({ placeholder: 'search...' })} />
+      {inputValue && <button onClick={() => clearSelection()}>x</button>}
+      <button {...getToggleButtonProps()}>toggle</button>
+
+      {isOpen && (
+        <div {...getMenuProps()}>
+          <ul>
+            {items
+              .filter(
+                item =>
+                  !inputValue ||
+                  inputValue === itemToString(selectedItem) ||
+                  item.name.toLowerCase().includes(inputValue.toLowerCase()),
+              )
+              .map((item, index) => (
+                <Item
+                  {...getItemProps({
+                    key: index,
+                    item,
+                    active: highlightedIndex === index,
+                    selected: selectedItem === item,
+                  })}
+                >
+                  {item.name}
+                </Item>
+              ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default Autocomplete
+```

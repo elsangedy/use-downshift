@@ -1,0 +1,190 @@
+import React, { useState } from 'react'
+
+import useDownshift from '../src'
+
+import Item from './shared/Item'
+
+function MultiSelect({ items, onChange }) {
+  const [selectedItems, setSelectedItems] = useState([])
+
+  const stateReducer = (state, changes) => {
+    switch (changes.type) {
+      case useDownshift.stateChangeTypes.keyDownEnter:
+      case useDownshift.stateChangeTypes.clickItem:
+        return {
+          ...changes,
+          highlightedIndex: state.highlightedIndex,
+          isOpen: true,
+          inputValue: '',
+        }
+      default:
+        return changes
+    }
+  }
+
+  const callOnChange = (items, downshift) => {
+    if (onChange) {
+      onChange(items, getStateAndHelpers(downshift))
+    }
+  }
+
+  const handleSelection = (selectedItem, downshift) => {
+    if (selectedItems.includes(selectedItem)) {
+      removeItem(selectedItem, downshift)
+    } else {
+      addSelectedItem(selectedItem, downshift)
+    }
+  }
+
+  const removeItem = (item, downshift) => {
+    const items = selectedItems.filter(i => i !== item)
+    setSelectedItems(items)
+    callOnChange(items, downshift)
+  }
+
+  const addSelectedItem = (item, downshift) => {
+    const items = [...selectedItems, item]
+    setSelectedItems(items)
+    callOnChange(items, downshift)
+  }
+
+  const getRemoveButtonProps = ({
+    onClick,
+    item,
+    downshift,
+    ...props
+  } = {}) => {
+    return {
+      onClick: e => {
+        onClick && onClick(e)
+        e.stopPropagation()
+        removeItem(item, downshift)
+      },
+      ...props,
+    }
+  }
+
+  const getStateAndHelpers = downshift => {
+    return {
+      getRemoveButtonProps,
+      removeItem,
+      selectedItems,
+      ...downshift,
+    }
+  }
+
+  const itemToString = item => (item ? item.name : '')
+
+  const {
+    isOpen,
+    getRootProps,
+    getMenuProps,
+    getItemProps,
+    getLabelProps,
+    getInputProps,
+    getToggleButtonProps,
+    highlightedIndex,
+    inputValue,
+    selectedItem,
+  } = useDownshift({
+    stateReducer,
+    itemToString,
+    onChange: handleSelection,
+    selectedItem: null,
+  })
+
+  return (
+    <div {...getRootProps()}>
+      <label {...getLabelProps()}>Multi Select</label>
+      <br />
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          padding: 10,
+          border: '1px solid blue',
+          maxWidth: 300,
+        }}
+      >
+        {selectedItems.length > 0
+          ? selectedItems.map(item => (
+              <div
+                style={{
+                  margin: 2,
+                  paddingTop: 2,
+                  paddingBottom: 2,
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  display: 'inline-block',
+                  wordWrap: 'none',
+                  backgroundColor: '#ccc',
+                  borderRadius: 2,
+                }}
+              >
+                {itemToString(item)}
+
+                <button
+                  {...getRemoveButtonProps({
+                    item,
+                    style: {
+                      cursor: 'pointer',
+                      lineHeight: 0.8,
+                      border: 'none',
+                      backgroundColor: 'transparent',
+                      padding: '0',
+                      fontSize: '16px',
+                      margin: '0 0 0 10px',
+                    },
+                  })}
+                >
+                  𝘅
+                </button>
+              </div>
+            ))
+          : null}
+        <input
+          {...getInputProps({
+            onKeyDown: event => {
+              if (event.key === 'Backspace' && !inputValue) {
+                removeItem(selectedItems[selectedItems.length - 1])
+              }
+            },
+            placeholder: 'select value...',
+          })}
+        />
+      </div>
+      <button {...getToggleButtonProps()}>toggle</button>
+
+      {isOpen && (
+        <div {...getMenuProps()}>
+          <ul>
+            {items
+              .filter(
+                item =>
+                  !inputValue ||
+                  inputValue === selectedItem ||
+                  itemToString(item)
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase()),
+              )
+              .map((item, index) => (
+                <Item
+                  {...getItemProps({
+                    key: index,
+                    item,
+                    active: highlightedIndex === index,
+                    selected: selectedItems.includes(item),
+                  })}
+                >
+                  {itemToString(item)}
+                </Item>
+              ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default MultiSelect

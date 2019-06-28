@@ -1,0 +1,98 @@
+---
+name: Home
+route: /
+---
+
+# Getting Started
+
+https://codesandbox.io/s/use-downshift-11dpy
+
+TODO
+
+## Install
+
+```bash
+yarn add use-downshift
+```
+
+## Hook
+
+```js
+import { useDownshift } from 'use-downshift'
+
+const {
+  // prop getters
+  getRootProps,
+  getMenuProps,
+  getItemProps,
+  getLabelProps,
+  getInputProps,
+  getToggleButtonProps,
+
+  // actions
+  reset,
+  openMenu,
+  closeMenu,
+  toggleMenu,
+  selectItem,
+  selectItemAtIndex,
+  selectHighlightedItem,
+  setHighlightedIndex,
+  clearSelection,
+  clearItems,
+  setItemCount,
+  unsetItemCount,
+  setState,
+
+  // props
+  itemToString,
+
+  // derived
+  id,
+
+  // state
+  highlightedIndex,
+  inputValue,
+  isOpen,
+  selectedItem,
+} = useDownshift({
+  id,
+  menuId,
+  labelId,
+  inputId,
+  getItemId,
+  defaultHighlightedIndex,
+  defaultIsOpen,
+  getA11yStatusMessage,
+  itemToString,
+  onStateChange,
+  onInputValueChange,
+  onUserAction,
+  onChange,
+  onSelect,
+  onOuterClick,
+  selectedItemChanged,
+  stateReducer,
+  scrollIntoView,
+})
+```
+
+## stateChangeTypes
+
+- unknown
+- mouseUp
+- itemMouseEnter
+- keyDownArrowUp
+- keyDownArrowDown
+- keyDownEscape
+- keyDownEnter
+- keyDownHome
+- keyDownEnd
+- clickItem
+- blurInput
+- changeInput
+- keyDownSpaceButton
+- clickButton
+- blurButton
+- controlledPropUpdatedSelectedItem
+- touchEnd
