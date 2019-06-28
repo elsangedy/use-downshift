@@ -9,7 +9,7 @@
 ```jsx
 import React from 'react'
 
-import { useDownshift } from 'use-downshift'
+import useDownshift from 'use-downshift'
 
 const items = [
   {value: 'apple'},
