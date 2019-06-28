@@ -39,8 +39,8 @@ function MyComponent() {
     inputValue,
     selectedItem
   } = useDownshift({
-    onChange={selection => alert(`You selected ${selection.value}`)}
-    itemToString={item => (item ? item.value : '')}
+    onChange: selection => alert(`You selected ${selection.value}`),
+    itemToString: item => (item ? item.value : '')
   })
 
   return (
@@ -73,6 +73,13 @@ function MyComponent() {
 
 export default MyComponent
 ```
+
+## Roadmap
+* [ ] tests
+* [ ] ci/cd
+* [ ] semantic-release
+* [ ] docs
+* [ ] all-contributors
 
 ## Inspiration
 
