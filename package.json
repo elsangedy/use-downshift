@@ -24,20 +24,16 @@
     "now-build": "yarn build:docs",
     "dev": "docz dev",
     "build:docs": "docz build",
-    "builde": "kcd-scripts build --bundle",
-    "build": "cross-env BABEL_ENV=build babel src -d build --source-maps --delete-dir-on-start --no-comments"
+    "build": "kcd-scripts build --bundle"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.5",
     "compute-scroll-into-view": "^1.0.11"
   },
   "peerDependencies": {
     "react": ">=16.8"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "cross-env": "^5.2.0",
     "docz": "^1.2.0",
     "docz-theme-default": "^1.2.0",
     "kcd-scripts": "^1.4.0",

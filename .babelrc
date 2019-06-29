@@ -1,9 +1,0 @@
-{
-  "presets": ["@babel/preset-env"],
-  "ignore": ["node_modules"],
-  "env": {
-    "build": {
-      "ignore": ["node_modules", ".docz", "dist"]
-    }
-  }
-}
