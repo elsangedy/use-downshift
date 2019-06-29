@@ -789,9 +789,7 @@ function useDownshift(params) {
         return newState
       },
       () => {
-        // TODO: review
-        const { isOpen, highlightedIndex } = getState()
-        // const { isOpen, highlightedIndex } = newState
+        const { isOpen, highlightedIndex } = newState
 
         if (isOpen) {
           if (getItemCount() > 0 && typeof highlightedIndex === 'number') {
