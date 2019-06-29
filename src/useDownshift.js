@@ -148,7 +148,7 @@ function useDownshift(params) {
       window.removeEventListener('touchmove', onTouchMove)
       window.removeEventListener('touchend', onTouchEnd)
     }
-  }, [])
+  }, [state])
 
   useEffect(() => {
     if (
