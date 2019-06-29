@@ -564,8 +564,7 @@ function useDownshift(params) {
         (rootRef.current &&
           rootRef.current.contains(window.document.activeElement))
 
-      // if (!this.isMouseDown && !downshiftButtonIsActive) {
-      if (!downshiftButtonIsActive) {
+      if (!isMouseDownRef.current && !downshiftButtonIsActive) {
         reset({
           type: useDownshift.stateChangeTypes.blurInput,
         })
