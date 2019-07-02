@@ -841,7 +841,7 @@ function useDownshift(params) {
   }
 
   const getStateAndHelpers = () => {
-    const { isOpen, inputValue, selectedItem, highlightedIndex } = state
+    const { isOpen, inputValue, selectedItem, highlightedIndex } = getState()
     const { id, itemToString } = params
 
     return {
