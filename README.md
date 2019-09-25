@@ -75,6 +75,7 @@ export default MyComponent
 ```
 
 ## Roadmap
+* [ ] move to ts
 * [ ] tests
 * [ ] ci/cd
 * [ ] semantic-release
