@@ -27,17 +27,17 @@
     "build": "kcd-scripts build --bundle"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
+    "@babel/runtime": "^7.6.2",
     "compute-scroll-into-view": "^1.0.11"
   },
   "peerDependencies": {
     "react": ">=16.8"
   },
   "devDependencies": {
-    "docz": "^1.2.0",
+    "docz": "^1.3.2",
     "docz-theme-default": "^1.2.0",
-    "kcd-scripts": "^1.4.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "kcd-scripts": "^1.7.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }
