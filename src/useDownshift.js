@@ -164,7 +164,10 @@ function useDownshift(params) {
       })
     }
 
-    if (!avoidScrollingRef && shouldScroll(previousState, previousParams)) {
+    if (
+      !avoidScrollingRef.current &&
+      shouldScroll(previousState, previousParams)
+    ) {
       scrollHighlightedItemIntoView()
     }
 
