@@ -169,6 +169,8 @@ function useDownshift(params) {
       shouldScroll(previousState, previousParams)
     ) {
       scrollHighlightedItemIntoView()
+    } else {
+      avoidScrollingRef.current = false
     }
 
     updateStatus()
@@ -666,13 +668,11 @@ function useDownshift(params) {
           return
         }
 
+        avoidScrollingRef.current = true
+
         setHighlightedIndex(index, {
           type: useDownshift.stateChangeTypes.itemMouseEnter,
         })
-
-        avoidScrollingRef.current = true
-
-        internalSetTimeout(() => (avoidScrollingRef.current = false), 250)
       }),
       onMouseDown: callAllEventHandlers(onMouseDown, event => {
         event.preventDefault()
