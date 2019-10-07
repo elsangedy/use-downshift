@@ -164,17 +164,19 @@ function useDownshift(params) {
       })
     }
 
-    if (
-      !avoidScrollingRef.current &&
-      shouldScroll(previousState, previousParams)
-    ) {
-      scrollHighlightedItemIntoView()
-    } else {
-      avoidScrollingRef.current = false
-    }
-
     updateStatus()
   }, [state, params])
+
+  useEffect(() => {
+    if (avoidScrollingRef.current) {
+      avoidScrollingRef.current = false
+      return
+    }
+
+    if (shouldScroll(previousState, previousParams)) {
+      scrollHighlightedItemIntoView()
+    }
+  }, [state.highlightedIndex])
 
   const updateStatus = debounce(() => {
     const state = getState()
@@ -197,7 +199,7 @@ function useDownshift(params) {
     params.scrollIntoView(node, menuRef.current)
   }
 
-  const shouldScroll = (prevState, prevParams) => {
+  const shouldScroll = (prevState = {}, prevParams = {}) => {
     const { highlightedIndex: currentHighlightedIndex } =
       params.highlightedIndex === undefined ? getState() : params
     const { highlightedIndex: prevHighlightedIndex } =
@@ -668,11 +670,11 @@ function useDownshift(params) {
           return
         }
 
-        avoidScrollingRef.current = true
-
         setHighlightedIndex(index, {
           type: useDownshift.stateChangeTypes.itemMouseEnter,
         })
+
+        avoidScrollingRef.current = true
       }),
       onMouseDown: callAllEventHandlers(onMouseDown, event => {
         event.preventDefault()
